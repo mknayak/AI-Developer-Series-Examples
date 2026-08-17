@@ -54,15 +54,14 @@ class LLMManager:
     @staticmethod    
     def llm_client(client_name: str, base_url,key,model) -> LLMClientBase:
         if client_name == "openai":
-            client = OpenAIClient(api_key=key, model=model)
+            return OpenAIClient(api_key=key, model=model)
         elif client_name == "anthropic":
-            client = AnthropicClient(api_key=key, model=model)
+            return AnthropicClient(api_key=key, model=model)
         elif client_name == "azure_openai":
-            client = AzureOpenAIClient(api_key=key, model=model, endpoint=base_url)
+            return AzureOpenAIClient(api_key=key, model=model, endpoint=base_url)
         else:
             raise ValueError(f"Unknown client name: {client_name}")
         
-        return client
 
     def send_request(self, prompt: str) -> str:
         client = self.get_llm_client(self.client_name)
